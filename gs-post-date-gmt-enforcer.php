@@ -1,13 +1,31 @@
 <?php
 /**
- * Plugin Name:     Gs_post_date_gmt_enforcer
- * Plugin URI:      PLUGIN SITE HERE
- * Description:     PLUGIN DESCRIPTION HERE
- * Author:          YOUR NAME HERE
- * Author URI:      YOUR SITE HERE
- * Text Domain:     gs_post_date_gmt_enforcer
- * Domain Path:     /languages
+ * Plugin Name:     vmpublishing/gs_post_date_gmt_enforcer
+ * Plugin URI:      github.com/vmpublishing/gs_post_date_gmt_enforcer
+ * Description:     enforce correct post_date_gmt on every post state
+ * Author:          Dirk Gustke
+ * Author URI:      www.gruenderszene.de
+ * Text Domain:     vmpublishing/gs_post_date_gmt_enforcer
  * Version:         0.1.0
  *
- * @package         Gs_post_date_gmt_enforcer
+ * @package         vmpublishing/gs_post_date_gmt_enforcer
  */
+
+add_action('plugins_loaded', 'gs_post_date_gmt_enforcer_loaded');
+
+
+function gs_post_date_gmt_enforcer_loaded() {
+  add_filter('wp_insert_post_data', 'gs_post_date_gmt_enforcer_enforce', 5, 2);
+}
+
+
+function gs_post_date_gmt_enforcer_enforce($post, $update) {
+  if (!empty($post['post_date']) && '0000-00-00 00:00:00' !== $post['post_date']) {
+    if (empty($post['post_date_gmt']) || '0000-00-00 00:00:00' === $post['post_date_gmt']) {
+      $post['post_date_gmt'] = get_gmt_from_date($post['post_date']);
+    }
+  }
+
+  return $post;
+}
+
