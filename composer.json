@@ -1,5 +1,5 @@
 {
-  "name": "vmpublishing/gs_categorized_post_export",
+  "name": "vmpublishing/gs_post_date_gmt_enforcer",
   "type": "wordpress-plugin",
   "require": {
     "composer/installers": "~1.0"
