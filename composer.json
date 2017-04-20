@@ -1,0 +1,8 @@
+{
+  "name": "vmpublishing/gs_categorized_post_export",
+  "type": "wordpress-plugin",
+  "require": {
+    "composer/installers": "~1.0"
+  }
+}
+
