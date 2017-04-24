@@ -16,6 +16,7 @@ add_action('plugins_loaded', 'gs_post_date_gmt_enforcer_loaded');
 
 function gs_post_date_gmt_enforcer_loaded() {
   add_filter('wp_insert_post_data', 'gs_post_date_gmt_enforcer_enforce', 5, 2);
+  add_filter('publish_post', 'gs_post_date_gmt_enforcer_reset_on_publish', 5, 2);
 }
 
 
@@ -27,5 +28,12 @@ function gs_post_date_gmt_enforcer_enforce($post, $update) {
   }
 
   return $post;
+}
+
+
+function gs_post_date_gmt_enforcer_reset_on_publish($ID, $post) {
+  $post->post_date_gmt = get_gmt_from_date($post->post_date);
+
+  return $ID;
 }
 
